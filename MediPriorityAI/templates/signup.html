@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}Create account · MediPriority AI{% endblock %}
+{% block content %}
+<div class="signup-shell"><a class="brand" href="{{ url_for('login') }}"><span class="brand-mark">✚</span><span>MediPriority<span class="brand-ai"> AI</span><small>CARE FLOW INTELLIGENCE</small></span></a>
+<div class="signup-card"><a class="back-link" href="{{ url_for('login') }}">← Back to sign in</a><span class="eyebrow muted">GET STARTED</span><h1>Create your workspace</h1><p class="subtle">Set up your staff account to manage patient intake and care coordination.</p>
+<form method="post" class="form-stack">
+<label>Full name<div class="input-wrap"><span>♙</span><input name="full_name" placeholder="Your full name" required minlength="2"></div></label>
+<label>Work email<div class="input-wrap"><span>✉</span><input type="email" name="email" placeholder="you@clinic.com" required></div></label>
+<label>Workspace role<div class="input-wrap"><span>✚</span><input value="Reception" readonly aria-readonly="true"></div></label>
+<label>Password<div class="input-wrap"><span>⌑</span><input type="password" name="password" placeholder="At least 8 characters" minlength="8" required><button type="button" class="show-password" data-toggle-password>Show</button></div></label>
+<label class="check-label"><input type="checkbox" required> <span>I agree to use this system responsibly and understand that its screening labels are decision-support only, not a medical diagnosis.</span></label>
+<button class="btn btn-primary btn-full" type="submit">Create account <span>→</span></button>
+</form><p class="auth-foot">Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p></div>
+</div>
+{% endblock %}

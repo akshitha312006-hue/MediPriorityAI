@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block title %}Sign in · MediPriority AI{% endblock %}
+{% block content %}
+<div class="auth-grid">
+ <section class="auth-hero">
+  <div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div>
+  <a class="brand brand-light" href="#"><span class="brand-mark">✚</span><span>MediPriority<span class="brand-ai"> AI</span><small>CARE FLOW INTELLIGENCE</small></span></a>
+  <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> SMARTER PATIENT INTAKE</span><h1>Every patient.<br><em>The right attention.</em></h1><p>Bring clarity to the front desk with organized patient intake, visible warning signs, and a care team that stays in sync.</p>
+  <div class="hero-stats"><div><b>01</b><span>Capture</span></div><i></i><div><b>02</b><span>Prioritize</span></div><i></i><div><b>03</b><span>Coordinate</span></div></div></div>
+  <div class="hero-footer"><span>● Designed for coordinated care</span><span>MEDIPRIORITY / PLATFORM</span></div>
+ </section>
+ <section class="auth-panel"><div class="auth-card"><div class="mobile-brand brand"><span class="brand-mark">✚</span><span>MediPriority<span class="brand-ai"> AI</span></span></div><div class="auth-heading"><div class="mini-icon">↗</div><span class="eyebrow muted">WELCOME BACK</span><h2>Sign in to your workspace</h2><p>Enter your credentials to continue to the care dashboard.</p></div>
+ <form method="post" class="form-stack">
+  <label>Email address<div class="input-wrap"><span>✉</span><input type="email" name="email" placeholder="you@clinic.com" required autocomplete="username"></div></label>
+  <label>Password<div class="input-wrap"><span>⌑</span><input type="password" name="password" placeholder="Enter your password" required autocomplete="current-password"><button type="button" class="show-password" data-toggle-password>Show</button></div></label>
+  <button class="btn btn-primary btn-full" type="submit">Sign in <span>→</span></button>
+ </form>
+ <div class="auth-divider"><span>NEW TO MEDIPRIORITY?</span></div><a href="{{ url_for('signup') }}" class="btn btn-outline btn-full">Create an account <span>＋</span></a>
+ <div class="demo-box"><div class="demo-icon">✦</div><div><b>Explore the demo workspace</b><p>Email: <code>demo@medipriority.ai</code><br>Password: <code>Demo@123</code></p></div><button type="button" class="copy-demo" title="Fill demo credentials" data-fill-demo>↙</button></div>
+ <p class="auth-foot">Protected workspace · Use fictional data for demos</p></div></section>
+</div>
+{% endblock %}

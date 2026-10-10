@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% block title %}Register patient · MediPriority AI{% endblock %}{% block crumb %}Register patient{% endblock %}
+{% block content %}
+<div class="page-heading"><div><a class="back-link" href="{{ url_for('dashboard') }}">← Back to overview</a><span class="eyebrow muted">NEW INTAKE RECORD</span><h1>Register a patient</h1><p class="subtle">Capture the patient's concern and available observations for clinical review.</p></div><div class="step-indicator"><span>01</span><div><b>Patient intake</b><small>Required information marked *</small></div></div></div>
+<div class="notice-strip safety"><div class="notice-symbol">!</div><p><b>Do not delay care to complete this form.</b> If the patient appears acutely unwell or has severe warning signs, alert clinical staff and follow emergency procedures immediately.</p></div>
+<form method="post" class="intake-layout">
+<div class="intake-main">
+<section class="form-card"><div class="form-section-title"><span class="section-number">01</span><div><h2>Patient information</h2><p>Basic details for identifying the patient.</p></div></div><div class="field-grid">
+<label class="span-2">Full name *<input name="full_name" placeholder="Enter patient's full name" required></label>
+<label>Age *<div class="unit-input"><input type="number" name="age" min="0" max="120" placeholder="e.g. 42" required><span>years</span></div></label>
+<label>Sex<select name="sex"><option>Prefer not to say</option><option>Female</option><option>Male</option><option>Intersex</option></select></label>
+<label class="span-2">Contact number *<input name="phone" placeholder="Patient or caregiver phone" required></label>
+</div></section>
+<section class="form-card"><div class="form-section-title"><span class="section-number">02</span><div><h2>Presenting concern</h2><p>Record the patient's own description wherever possible.</p></div></div><div class="field-grid">
+<label class="span-2">Symptoms / reason for visit *<textarea name="symptoms" rows="3" placeholder="Describe the main symptoms, where they occur, and any changes..." required></textarea></label>
+<label class="span-2">How long have symptoms been present?<input name="duration" placeholder="e.g. Started 2 hours ago, since yesterday"></label>
+<label class="span-2">Relevant medical history / allergies<textarea name="medical_history" rows="2" placeholder="Known conditions, current medication, allergies, pregnancy, or 'None reported'"></textarea></label>
+</div></section>
+<section class="form-card"><div class="form-section-title"><span class="section-number">03</span><div><h2>Available vital signs</h2><p>Optional — enter only values measured by trained staff using appropriate equipment.</p></div></div><div class="field-grid vitals-grid">
+<label>Temperature<div class="unit-input"><input type="number" name="temperature" step="0.1" min="30" max="45" placeholder="e.g. 37.2"><span>°C</span></div></label>
+<label>Pulse rate<div class="unit-input"><input type="number" name="pulse" min="1" max="300" placeholder="e.g. 82"><span>bpm</span></div></label>
+<label>Oxygen saturation<div class="unit-input"><input type="number" name="oxygen" min="1" max="100" placeholder="e.g. 98"><span>% SpO₂</span></div></label>
+</div><p class="field-hint">Do not estimate missing measurements. Leave the field blank if not measured.</p></section>
+<section class="form-card"><div class="form-section-title"><span class="section-number">04</span><div><h2>Warning-sign checklist</h2><p>Select any signs reported or observed. This helps flag records for prompt human review.</p></div></div>
+<div class="flag-group"><h3><span class="flag-dot red-dot"></span> Potentially time-critical warning signs</h3><div class="flag-grid">{% for key,label in red_flags.items() %}<label class="flag-option"><input type="checkbox" name="flags" value="{{ key }}"><span>{{ label }}</span></label>{% endfor %}</div></div>
+<div class="flag-group"><h3><span class="flag-dot amber-dot"></span> Additional concerns for prompt review</h3><div class="flag-grid">{% for key,label in priority_flags.items() %}<label class="flag-option"><input type="checkbox" name="flags" value="{{ key }}"><span>{{ label }}</span></label>{% endfor %}</div></div>
+</section>
+<div class="form-actions"><a class="btn btn-outline" href="{{ url_for('dashboard') }}">Cancel</a><button class="btn btn-primary" type="submit">Save patient record <span>→</span></button></div>
+</div>
+<aside class="intake-aside"><div class="aside-card"><div class="aside-icon">✦</div><h3>How screening works</h3><p>The system applies transparent rules to the warning signs and vital signs entered. It does not use a validated clinical model.</p><div class="aside-rule"><span class="rule-dot red-dot"></span><div><b>Immediate attention</b><small>Selected critical warning sign or very concerning entered vital sign.</small></div></div><div class="aside-rule"><span class="rule-dot amber-dot"></span><div><b>Priority clinical review</b><small>Additional concern or selected vital-sign threshold.</small></div></div><div class="aside-rule"><span class="rule-dot green-dot"></span><div><b>Standard clinical review</b><small>No listed trigger selected; this does not mean the patient is safe.</small></div></div><div class="aside-warning">A low-priority label must never be used to rule out an emergency. A clinician must confirm or override the result.</div></div><div class="aside-mini"><span>⌁</span><div><b>Good intake practice</b><p>Document symptoms clearly and record the time they began.</p></div></div></aside>
+</form>
+{% endblock %}

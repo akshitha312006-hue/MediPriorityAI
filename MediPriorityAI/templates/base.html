@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}MediPriority AI{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if session.get('user_id') %}
+<aside class="sidebar">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">✚</span><span>MediPriority<span class="brand-ai"> AI</span><small>CARE FLOW INTELLIGENCE</small></span></a>
+  <div class="side-label">WORKSPACE</div>
+  <a class="nav-link {% if current_page=='dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}"><span>▦</span> Overview</a>
+  <a class="nav-link {% if current_page=='new' %}active{% endif %}" href="{{ url_for('new_patient') }}"><span>＋</span> Register patient</a>
+  <a class="nav-link" href="{{ url_for('dashboard') }}#queue"><span>☷</span> Patient queue</a>
+  <div class="sidebar-bottom">
+    <div class="secure-note"><span class="secure-dot"></span><div><b>Workspace secure</b><small>Local database enabled</small></div></div>
+    <div class="profile"><div class="avatar">{{ session.get('full_name','S')[0]|upper }}</div><div class="profile-name"><b>{{ session.get('full_name','Staff') }}</b><small>{{ session.get('role','Reception') }}</small></div><a class="logout" href="{{ url_for('logout') }}" title="Sign out">↗</a></div>
+  </div>
+</aside>
+{% endif %}
+<main class="{% if session.get('user_id') %}main-app{% else %}main-auth{% endif %}">
+  {% if session.get('user_id') %}
+  <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> {% block crumb %}Overview{% endblock %}</div><div class="top-actions"><span class="live-dot"></span><span class="live-text">System operational</span><span class="top-date" id="todayDate"></span></div></header>
+  {% endif %}
+  <div class="{% if session.get('user_id') %}page-wrap{% else %}auth-wrap{% endif %}">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}<button onclick="this.parentElement.remove()">×</button></div>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
